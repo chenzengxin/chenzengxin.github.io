@@ -6,15 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href>
-  <title>Archives: 2019 | This is Chenzengxin&#39;s personal page</title>
+  <title>WebGL | This is Chenzengxin&#39;s personal page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="This is Chenzengxin&#39;s personal page">
-<meta property="og:url" content="/archives/2019/index.html">
+  <meta name="description" content="1、WebGL基本原理WebGL 本质上是基于光栅化的 API，WebGL 只关注投影矩阵的坐标和投影矩阵的颜色，可以使用“着色器”来完成上述任务。顶点着色器可以提供投影矩阵的坐标，片段着色器可以提供投影矩阵的颜色。投影矩阵的坐标的范围始终是从 -1 到 1。WebGL基于图元（三角形、点、线）进行图像绘制123// Get A WebGL contextvar canvas = document">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WebGL">
+<meta property="og:url" content="/2019/09/30/WebGL/index.html">
 <meta property="og:site_name" content="This is Chenzengxin&#39;s personal page">
+<meta property="og:description" content="1、WebGL基本原理WebGL 本质上是基于光栅化的 API，WebGL 只关注投影矩阵的坐标和投影矩阵的颜色，可以使用“着色器”来完成上述任务。顶点着色器可以提供投影矩阵的坐标，片段着色器可以提供投影矩阵的颜色。投影矩阵的坐标的范围始终是从 -1 到 1。WebGL基于图元（三角形、点、线）进行图像绘制123// Get A WebGL contextvar canvas = document">
 <meta property="og:locale" content="cn">
+<meta property="og:image" content="/img/webgl.png">
+<meta property="og:updated_time" content="2019-09-30T10:42:52.766Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="This is Chenzengxin&#39;s personal page">
+<meta name="twitter:title" content="WebGL">
+<meta name="twitter:description" content="1、WebGL基本原理WebGL 本质上是基于光栅化的 API，WebGL 只关注投影矩阵的坐标和投影矩阵的颜色，可以使用“着色器”来完成上述任务。顶点着色器可以提供投影矩阵的坐标，片段着色器可以提供投影矩阵的颜色。投影矩阵的坐标的范围始终是从 -1 到 1。WebGL基于图元（三角形、点、线）进行图像绘制123// Get A WebGL contextvar canvas = document">
+<meta name="twitter:image" content="/img/webgl.png">
   
     <link rel="alternative" href="/atom.xml" title="This is Chenzengxin&#39;s personal page" type="application/atom+xml">
   
@@ -130,238 +136,168 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-WebGL" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      WebGL
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/30/WebGL/" class="archive-article-date">
+
+        
+        <a href="/2019/09/30/WebGL/" class="archive-article-date">
   	<time datetime="2019-09-29T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-30</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/30/WebGL/">WebGL</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1、WebGL基本原理"><a href="#1、WebGL基本原理" class="headerlink" title="1、WebGL基本原理"></a>1、WebGL基本原理</h3><pre><code>WebGL 本质上是基于光栅化的 API，WebGL 只关注投影矩阵的坐标和投影矩阵的颜色，可以使用“着色器”来完成上述任务。顶点着色器可以提供投影矩阵的坐标，片段着色器可以提供投影矩阵的颜色。投影矩阵的坐标的范围始终是从 -1 到 1。WebGL基于图元（三角形、点、线）进行图像绘制</code></pre><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Get A WebGL context</span></span><br><span class="line"><span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas"</span>);</span><br><span class="line"><span class="keyword">var</span> gl = canvas.getContext(<span class="string">"experimental-webgl"</span>);<span class="comment">//获取绘图上下文</span></span><br></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
-          
+<h3 id="2、viewport-视图窗口"><a href="#2、viewport-视图窗口" class="headerlink" title="2、viewport 视图窗口"></a>2、viewport 视图窗口</h3><pre><code>视图窗口定义了绘制区域的边界。通过绘图上下文可以设置绘制窗口</code></pre><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">initViewport</span>(<span class="params">gl,canvas</span>)</span>&#123;</span><br><span class="line">    gl.viewport(<span class="number">0</span>,<span class="number">0</span>,canvas.width,canvas.height);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h3 id="3、缓冲、缓冲数组和类型化数组"><a href="#3、缓冲、缓冲数组和类型化数组" class="headerlink" title="3、缓冲、缓冲数组和类型化数组"></a>3、缓冲、缓冲数组和类型化数组</h3><pre><code>图元以数组的形式存储数据（buffer）</code></pre><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 构建用于绘制的正方形顶点数据</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createSquare</span>(<span class="params">gl</span>) </span>&#123; </span><br><span class="line">    <span class="keyword">var</span> vertexBuffer; </span><br><span class="line">    vertexBuffer = gl.createBuffer(); </span><br><span class="line">    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer); </span><br><span class="line">    <span class="keyword">var</span> verts = [ </span><br><span class="line">         <span class="number">.5</span>,  <span class="number">.5</span>, <span class="number">0.0</span>, </span><br><span class="line">        <span class="number">-.5</span>,  <span class="number">.5</span>, <span class="number">0.0</span>, </span><br><span class="line">         <span class="number">.5</span>, <span class="number">-.5</span>, <span class="number">0.0</span>, </span><br><span class="line">        <span class="number">-.5</span>, <span class="number">-.5</span>, <span class="number">0.0</span> </span><br><span class="line">    ]; </span><br><span class="line">    gl.bufferData(gl.ARRAY_BUFFER, <span class="keyword">new</span> <span class="built_in">Float32Array</span>(verts), gl.STATIC_DRAW); </span><br><span class="line">    <span class="keyword">var</span> square = &#123;<span class="attr">buffer</span>:vertexBuffer, <span class="attr">vertSize</span>:<span class="number">3</span>, <span class="attr">nVerts</span>:<span class="number">4</span>,<span class="attr">primtype</span>:gl.TRIANGLE_STRIP&#125;; </span><br><span class="line">    <span class="keyword">return</span> square; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4、矩阵"><a href="#4、矩阵" class="headerlink" title="4、矩阵"></a>4、矩阵</h3><pre><code>在绘制之前，我们首先要创建一对矩阵。第一个矩阵用于描述正方形在3D坐标系统中的位置（模型-视图矩阵，ModelView matrix），第二个矩阵称为投影矩阵（Projection matrix），着色器使用它来执行从3D空间坐标到2D视口绘制空间坐标的转换。</code></pre><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> projectionMatrix, modelViewMatrix; </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">initMatrices</span>(<span class="params">canvas</span>) </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    <span class="comment">// 创建一个模型-视图矩阵，包含一个位于（0,0,-3.333）的相机</span></span><br><span class="line">    modelViewMatrix = glMatrix.mat4.create(); </span><br><span class="line">    glMatrix.mat4.translate(modelViewMatrix, modelViewMatrix, [<span class="number">0</span>, <span class="number">0</span>, <span class="number">-3.333</span>]); </span><br><span class="line">    <span class="comment">// 创建一个45度角视野的投影矩阵</span></span><br><span class="line">    projectionMatrix = glMatrix.mat4.create(); </span><br><span class="line">    glMatrix.mat4.perspective(projectionMatrix, <span class="built_in">Math</span>.PI / <span class="number">4</span>, canvas.width / canvas.height, <span class="number">1</span>, <span class="number">10000</span>); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="着色器"><a href="#着色器" class="headerlink" title="着色器"></a>着色器</h3><pre><code>着色器通常由两个部分组成：顶点着色器（vertex shader）和片段着色器（fragment shader，又称pixel shader，像素着色器），顶点着色器负责将物体的坐标转换为2D显示区域的坐标；片段着色器负责基于颜色、纹理、光照、材质等数值计算转换顶点像素的最终颜色，</code></pre><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建着色器</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createShader</span>(<span class="params">gl, str, type</span>) </span>&#123; </span><br><span class="line">    <span class="keyword">var</span> shader; </span><br><span class="line">    <span class="keyword">if</span> (type == <span class="string">"fragment"</span>) &#123; </span><br><span class="line">        shader = gl.createShader(gl.FRAGMENT_SHADER); </span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type == <span class="string">"vertex"</span>) &#123; </span><br><span class="line">        shader = gl.createShader(gl.VERTEX_SHADER); </span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>; </span><br><span class="line">    &#125; </span><br><span class="line">    gl.shaderSource(shader, str); </span><br><span class="line">    gl.compileShader(shader); </span><br><span class="line">    <span class="keyword">if</span> (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) &#123; </span><br><span class="line">        alert(gl.getShaderInfoLog(shader)); </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>; </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">return</span> shader; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> vertexShaderSource = </span><br><span class="line">    <span class="string">"attribute vec3 vertexPos;\n"</span> + </span><br><span class="line">    <span class="string">"uniform mat4 modelViewMatrix;\n"</span> +</span><br><span class="line">    <span class="string">"uniform mat4 projectionMatrix;\n"</span> + </span><br><span class="line">    <span class="string">"void main(void) &#123;\n"</span> + </span><br><span class="line">    <span class="string">"   //返回经过投影和变换的顶点值\n"</span> + </span><br><span class="line">    <span class="string">"   gl_Position = projectionMatrix * modelViewMatrix * \n"</span> + </span><br><span class="line">    <span class="string">"   vec4(vertexPos, 1.0);\n"</span> + </span><br><span class="line">    <span class="string">"&#125;\n"</span>; </span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> fragmentShaderSource = </span><br><span class="line">    <span class="string">"void main(void) &#123;\n"</span> + </span><br><span class="line">    <span class="string">"   //返回像素点的颜色：输出白色\n"</span>+ </span><br><span class="line">    <span class="string">"   gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);\n"</span> + </span><br><span class="line">    <span class="string">"&#125;\n"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> shaderProgram, shaderVertexPositionAttribute,</span><br><span class="line">    shaderProjectionMatrixUniform,</span><br><span class="line">    shaderModelViewMatrixUniform;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">initShader</span>(<span class="params">gl</span>) </span>&#123; </span><br><span class="line">    <span class="comment">// 加载并编译片段和顶点着色器</span></span><br><span class="line">    <span class="keyword">var</span> fragmentShader = createShader(gl, fragmentShaderSource, <span class="string">"fragment"</span>); </span><br><span class="line">    <span class="keyword">var</span> vertexShader = createShader(gl, vertexShaderSource, <span class="string">"vertex"</span>); </span><br><span class="line">    <span class="comment">// 将着色器链接到一个程序中</span></span><br><span class="line">    shaderProgram = gl.createProgram(); </span><br><span class="line">    gl.attachShader(shaderProgram, vertexShader); </span><br><span class="line">    gl.attachShader(shaderProgram, fragmentShader); </span><br><span class="line">    gl.linkProgram(shaderProgram); </span><br><span class="line">    <span class="comment">// 获取指向着色器参数的指针</span></span><br><span class="line">    shaderVertexPositionAttribute = gl.getAttribLocation(shaderProgram, <span class="string">"vertexPos"</span>);</span><br><span class="line">    gl.enableVertexAttribArray(shaderVertexPositionAttribute); </span><br><span class="line">    shaderProjectionMatrixUniform = </span><br><span class="line">    gl.getUniformLocation(shaderProgram, <span class="string">"projectionMatrix"</span>); </span><br><span class="line">    shaderModelViewMatrixUniform = </span><br><span class="line">    gl.getUniformLocation(shaderProgram, <span class="string">"modelViewMatrix"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!gl.getProgramParameter(shaderProgram, </span><br><span class="line">        gl.LINK_STATUS)) &#123; </span><br><span class="line">        alert(<span class="string">"Could not initialise shaders"</span>); </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="绘制图元"><a href="#绘制图元" class="headerlink" title="绘制图元"></a>绘制图元</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">draw</span>(<span class="params">gl, obj</span>) </span>&#123; </span><br><span class="line">    <span class="comment">// 清空背景（使用黑色填充）</span></span><br><span class="line">    gl.clearColor(<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>); </span><br><span class="line">    gl.clear(gl.COLOR_BUFFER_BIT); </span><br><span class="line">    <span class="comment">// 设置待绘制的顶点缓冲</span></span><br><span class="line">    gl.bindBuffer(gl.ARRAY_BUFFER, obj.buffer); </span><br><span class="line">    <span class="comment">// 设置待用的着色器</span></span><br><span class="line">    gl.useProgram(shaderProgram);</span><br><span class="line">    <span class="comment">// 建立着色器参数之间的关联：顶点和投影/模型矩阵</span></span><br><span class="line">    gl.vertexAttribPointer(shaderVertexPositionAttribute, </span><br><span class="line">    obj.vertSize, gl.FLOAT, <span class="literal">false</span>, <span class="number">0</span>, <span class="number">0</span>); </span><br><span class="line">    gl.uniformMatrix4fv(shaderProjectionMatrixUniform, <span class="literal">false</span>, </span><br><span class="line">    projectionMatrix); </span><br><span class="line">    gl.uniformMatrix4fv(shaderModelViewMatrixUniform, <span class="literal">false</span>, </span><br><span class="line">    modelViewMatrix);</span><br><span class="line">    <span class="comment">// 绘制物体</span></span><br><span class="line">    gl.drawArrays(obj.primtype, <span class="number">0</span>, obj.nVerts); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> <img src="/img/webgl.png" alt title="title"></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http:/2019/09/30/WebGL/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/12/CSS/" class="archive-article-date">
-  	<time datetime="2019-09-11T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-12</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/09/12/CSS/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">C# Reflection</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/12/CSS/">C# Reflection</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/04/unrealengine_2/" class="archive-article-date">
-  	<time datetime="2019-09-03T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/04/unrealengine_2/">虚幻引擎学习2</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/29/unrealengine_1/" class="archive-article-date">
-  	<time datetime="2019-08-28T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/29/unrealengine_1/">虚幻引擎学习1</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/28/HeronFormula/" class="archive-article-date">
-  	<time datetime="2019-08-27T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-28</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/28/HeronFormula/">海伦公式</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/27/C# Reflection/" class="archive-article-date">
-  	<time datetime="2019-08-26T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/27/C# Reflection/">C# Reflection</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/21/hello-world/" class="archive-article-date">
-  	<time datetime="2019-08-21T02:52:13.482Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-21</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/21/hello-world/">Hello World</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/21/第一篇博文/" class="archive-article-date">
-  	<time datetime="2019-08-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-21</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/21/第一篇博文/">第一篇博文</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -384,8 +320,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

@@ -132,6 +132,325 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-WebGL" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/09/30/WebGL/">WebGL</a>
+    </h1>
+  
+
+        
+        <a href="/2019/09/30/WebGL/" class="archive-article-date">
+  	<time datetime="2019-09-29T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1、WebGL基本原理"><a href="#1、WebGL基本原理" class="headerlink" title="1、WebGL基本原理"></a>1、WebGL基本原理</h3><pre><code>WebGL 本质上是基于光栅化的 API，WebGL 只关注投影矩阵的坐标和投影矩阵的颜色，可以使用“着色器”来完成上述任务。顶点着色器可以提供投影矩阵的坐标，片段着色器可以提供投影矩阵的颜色。投影矩阵的坐标的范围始终是从 -1 到 1。WebGL基于图元（三角形、点、线）进行图像绘制</code></pre><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Get A WebGL context</span></span><br><span class="line"><span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas"</span>);</span><br><span class="line"><span class="keyword">var</span> gl = canvas.getContext(<span class="string">"experimental-webgl"</span>);<span class="comment">//获取绘图上下文</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2、viewport-视图窗口"><a href="#2、viewport-视图窗口" class="headerlink" title="2、viewport 视图窗口"></a>2、viewport 视图窗口</h3><pre><code>视图窗口定义了绘制区域的边界。通过绘图上下文可以设置绘制窗口</code></pre><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">initViewport</span>(<span class="params">gl,canvas</span>)</span>&#123;</span><br><span class="line">    gl.viewport(<span class="number">0</span>,<span class="number">0</span>,canvas.width,canvas.height);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3、缓冲、缓冲数组和类型化数组"><a href="#3、缓冲、缓冲数组和类型化数组" class="headerlink" title="3、缓冲、缓冲数组和类型化数组"></a>3、缓冲、缓冲数组和类型化数组</h3><pre><code>图元以数组的形式存储数据（buffer）</code></pre><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 构建用于绘制的正方形顶点数据</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createSquare</span>(<span class="params">gl</span>) </span>&#123; </span><br><span class="line">    <span class="keyword">var</span> vertexBuffer; </span><br><span class="line">    vertexBuffer = gl.createBuffer(); </span><br><span class="line">    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer); </span><br><span class="line">    <span class="keyword">var</span> verts = [ </span><br><span class="line">         <span class="number">.5</span>,  <span class="number">.5</span>, <span class="number">0.0</span>, </span><br><span class="line">        <span class="number">-.5</span>,  <span class="number">.5</span>, <span class="number">0.0</span>, </span><br><span class="line">         <span class="number">.5</span>, <span class="number">-.5</span>, <span class="number">0.0</span>, </span><br><span class="line">        <span class="number">-.5</span>, <span class="number">-.5</span>, <span class="number">0.0</span> </span><br><span class="line">    ]; </span><br><span class="line">    gl.bufferData(gl.ARRAY_BUFFER, <span class="keyword">new</span> <span class="built_in">Float32Array</span>(verts), gl.STATIC_DRAW); </span><br><span class="line">    <span class="keyword">var</span> square = &#123;<span class="attr">buffer</span>:vertexBuffer, <span class="attr">vertSize</span>:<span class="number">3</span>, <span class="attr">nVerts</span>:<span class="number">4</span>,<span class="attr">primtype</span>:gl.TRIANGLE_STRIP&#125;; </span><br><span class="line">    <span class="keyword">return</span> square; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4、矩阵"><a href="#4、矩阵" class="headerlink" title="4、矩阵"></a>4、矩阵</h3><pre><code>在绘制之前，我们首先要创建一对矩阵。第一个矩阵用于描述正方形在3D坐标系统中的位置（模型-视图矩阵，ModelView matrix），第二个矩阵称为投影矩阵（Projection matrix），着色器使用它来执行从3D空间坐标到2D视口绘制空间坐标的转换。</code></pre><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> projectionMatrix, modelViewMatrix; </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">initMatrices</span>(<span class="params">canvas</span>) </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    <span class="comment">// 创建一个模型-视图矩阵，包含一个位于（0,0,-3.333）的相机</span></span><br><span class="line">    modelViewMatrix = glMatrix.mat4.create(); </span><br><span class="line">    glMatrix.mat4.translate(modelViewMatrix, modelViewMatrix, [<span class="number">0</span>, <span class="number">0</span>, <span class="number">-3.333</span>]); </span><br><span class="line">    <span class="comment">// 创建一个45度角视野的投影矩阵</span></span><br><span class="line">    projectionMatrix = glMatrix.mat4.create(); </span><br><span class="line">    glMatrix.mat4.perspective(projectionMatrix, <span class="built_in">Math</span>.PI / <span class="number">4</span>, canvas.width / canvas.height, <span class="number">1</span>, <span class="number">10000</span>); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="着色器"><a href="#着色器" class="headerlink" title="着色器"></a>着色器</h3><pre><code>着色器通常由两个部分组成：顶点着色器（vertex shader）和片段着色器（fragment shader，又称pixel shader，像素着色器），顶点着色器负责将物体的坐标转换为2D显示区域的坐标；片段着色器负责基于颜色、纹理、光照、材质等数值计算转换顶点像素的最终颜色，</code></pre><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建着色器</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createShader</span>(<span class="params">gl, str, type</span>) </span>&#123; </span><br><span class="line">    <span class="keyword">var</span> shader; </span><br><span class="line">    <span class="keyword">if</span> (type == <span class="string">"fragment"</span>) &#123; </span><br><span class="line">        shader = gl.createShader(gl.FRAGMENT_SHADER); </span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type == <span class="string">"vertex"</span>) &#123; </span><br><span class="line">        shader = gl.createShader(gl.VERTEX_SHADER); </span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>; </span><br><span class="line">    &#125; </span><br><span class="line">    gl.shaderSource(shader, str); </span><br><span class="line">    gl.compileShader(shader); </span><br><span class="line">    <span class="keyword">if</span> (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) &#123; </span><br><span class="line">        alert(gl.getShaderInfoLog(shader)); </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>; </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">return</span> shader; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> vertexShaderSource = </span><br><span class="line">    <span class="string">"attribute vec3 vertexPos;\n"</span> + </span><br><span class="line">    <span class="string">"uniform mat4 modelViewMatrix;\n"</span> +</span><br><span class="line">    <span class="string">"uniform mat4 projectionMatrix;\n"</span> + </span><br><span class="line">    <span class="string">"void main(void) &#123;\n"</span> + </span><br><span class="line">    <span class="string">"   //返回经过投影和变换的顶点值\n"</span> + </span><br><span class="line">    <span class="string">"   gl_Position = projectionMatrix * modelViewMatrix * \n"</span> + </span><br><span class="line">    <span class="string">"   vec4(vertexPos, 1.0);\n"</span> + </span><br><span class="line">    <span class="string">"&#125;\n"</span>; </span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> fragmentShaderSource = </span><br><span class="line">    <span class="string">"void main(void) &#123;\n"</span> + </span><br><span class="line">    <span class="string">"   //返回像素点的颜色：输出白色\n"</span>+ </span><br><span class="line">    <span class="string">"   gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);\n"</span> + </span><br><span class="line">    <span class="string">"&#125;\n"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> shaderProgram, shaderVertexPositionAttribute,</span><br><span class="line">    shaderProjectionMatrixUniform,</span><br><span class="line">    shaderModelViewMatrixUniform;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">initShader</span>(<span class="params">gl</span>) </span>&#123; </span><br><span class="line">    <span class="comment">// 加载并编译片段和顶点着色器</span></span><br><span class="line">    <span class="keyword">var</span> fragmentShader = createShader(gl, fragmentShaderSource, <span class="string">"fragment"</span>); </span><br><span class="line">    <span class="keyword">var</span> vertexShader = createShader(gl, vertexShaderSource, <span class="string">"vertex"</span>); </span><br><span class="line">    <span class="comment">// 将着色器链接到一个程序中</span></span><br><span class="line">    shaderProgram = gl.createProgram(); </span><br><span class="line">    gl.attachShader(shaderProgram, vertexShader); </span><br><span class="line">    gl.attachShader(shaderProgram, fragmentShader); </span><br><span class="line">    gl.linkProgram(shaderProgram); </span><br><span class="line">    <span class="comment">// 获取指向着色器参数的指针</span></span><br><span class="line">    shaderVertexPositionAttribute = gl.getAttribLocation(shaderProgram, <span class="string">"vertexPos"</span>);</span><br><span class="line">    gl.enableVertexAttribArray(shaderVertexPositionAttribute); </span><br><span class="line">    shaderProjectionMatrixUniform = </span><br><span class="line">    gl.getUniformLocation(shaderProgram, <span class="string">"projectionMatrix"</span>); </span><br><span class="line">    shaderModelViewMatrixUniform = </span><br><span class="line">    gl.getUniformLocation(shaderProgram, <span class="string">"modelViewMatrix"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!gl.getProgramParameter(shaderProgram, </span><br><span class="line">        gl.LINK_STATUS)) &#123; </span><br><span class="line">        alert(<span class="string">"Could not initialise shaders"</span>); </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="绘制图元"><a href="#绘制图元" class="headerlink" title="绘制图元"></a>绘制图元</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">draw</span>(<span class="params">gl, obj</span>) </span>&#123; </span><br><span class="line">    <span class="comment">// 清空背景（使用黑色填充）</span></span><br><span class="line">    gl.clearColor(<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>); </span><br><span class="line">    gl.clear(gl.COLOR_BUFFER_BIT); </span><br><span class="line">    <span class="comment">// 设置待绘制的顶点缓冲</span></span><br><span class="line">    gl.bindBuffer(gl.ARRAY_BUFFER, obj.buffer); </span><br><span class="line">    <span class="comment">// 设置待用的着色器</span></span><br><span class="line">    gl.useProgram(shaderProgram);</span><br><span class="line">    <span class="comment">// 建立着色器参数之间的关联：顶点和投影/模型矩阵</span></span><br><span class="line">    gl.vertexAttribPointer(shaderVertexPositionAttribute, </span><br><span class="line">    obj.vertSize, gl.FLOAT, <span class="literal">false</span>, <span class="number">0</span>, <span class="number">0</span>); </span><br><span class="line">    gl.uniformMatrix4fv(shaderProjectionMatrixUniform, <span class="literal">false</span>, </span><br><span class="line">    projectionMatrix); </span><br><span class="line">    gl.uniformMatrix4fv(shaderModelViewMatrixUniform, <span class="literal">false</span>, </span><br><span class="line">    modelViewMatrix);</span><br><span class="line">    <span class="comment">// 绘制物体</span></span><br><span class="line">    gl.drawArrays(obj.primtype, <span class="number">0</span>, obj.nVerts); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> <img src="/img/webgl.png" alt title="title"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/09/30/WebGL/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-CSS" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/09/12/CSS/">C# Reflection</a>
+    </h1>
+  
+
+        
+        <a href="/2019/09/12/CSS/" class="archive-article-date">
+  	<time datetime="2019-09-11T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><h5 id="CSS-属性定义背景效果"><a href="#CSS-属性定义背景效果" class="headerlink" title="CSS 属性定义背景效果:"></a>CSS 属性定义背景效果:</h5><pre><code>background-color 属性定义了元素的背景颜色
+background-image 属性描述了元素的背景图像
+background-repeat (no-repeat、repeat-x、repeat-y)
+background-attachment 背景图像是否固定或者随着页面的其余部分滚动。
+background-position 属性改变图像在背景中的位置</code></pre><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">body</span> &#123;<span class="attribute">background</span>:<span class="number">#ffffff</span> <span class="built_in">url</span>(<span class="string">'img_tree.png'</span>) no-repeat right top;&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Text"><a href="#Text" class="headerlink" title="Text"></a>Text</h2><h5 id="文本颜色"><a href="#文本颜色" class="headerlink" title="文本颜色:"></a>文本颜色:</h5><pre><code>十六进制值 - 如: ＃FF0000
+一个RGB值 - 如: RGB(255,0,0)
+颜色的名称 - 如: red</code></pre><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">body</span> &#123;<span class="attribute">color</span>:red;&#125;</span><br><span class="line"><span class="selector-tag">h1</span> &#123;<span class="attribute">color</span>:<span class="number">#00ff00</span>;&#125;</span><br><span class="line"><span class="selector-tag">h2</span> &#123;<span class="attribute">color</span>:<span class="built_in">rgb</span>(255,0,0);&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="文本的对齐方式"><a href="#文本的对齐方式" class="headerlink" title="文本的对齐方式:"></a>文本的对齐方式:</h5><pre><code>文本可居中或对齐到左或右,两端对齐。
+当text-align设置为&quot;justify&quot;，每一行被展开为宽度相等，左，右外边距是对齐。
+text-align</code></pre><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">h1</span> &#123;<span class="attribute">text-align</span>:center;&#125;</span><br><span class="line"><span class="selector-tag">p</span><span class="selector-class">.date</span> &#123;<span class="attribute">text-align</span>:right;&#125;</span><br><span class="line"><span class="selector-tag">p</span><span class="selector-class">.main</span> &#123;<span class="attribute">text-align</span>:justify;&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="文本修饰"><a href="#文本修饰" class="headerlink" title="文本修饰:"></a>文本修饰:</h5><pre><code>text-decoration 属性用来设置或删除文本的装饰。</code></pre><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">a</span> &#123;<span class="attribute">text-decoration</span>:none;&#125;</span><br><span class="line"><span class="selector-tag">h1</span> &#123;<span class="attribute">text-decoration</span>:overline;&#125;</span><br><span class="line"><span class="selector-tag">h2</span> &#123;<span class="attribute">text-decoration</span>:line-through;&#125;</span><br><span class="line"><span class="selector-tag">h3</span> &#123;<span class="attribute">text-decoration</span>:underline;&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="文本转换"><a href="#文本转换" class="headerlink" title="文本转换:"></a>文本转换:</h5><pre><code>text-decoration 属性用来设置或删除文本的装饰。</code></pre><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span><span class="selector-class">.uppercase</span> &#123;<span class="attribute">text-transform</span>:uppercase;&#125;</span><br><span class="line"><span class="selector-tag">p</span><span class="selector-class">.lowercase</span> &#123;<span class="attribute">text-transform</span>:lowercase;&#125;</span><br><span class="line"><span class="selector-tag">p</span><span class="selector-class">.capitalize</span> &#123;<span class="attribute">text-transform</span>:capitalize;&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="文本缩进"><a href="#文本缩进" class="headerlink" title="文本缩进:"></a>文本缩进:</h5><pre><code>text-decoration 属性用来设置或删除文本的装饰。</code></pre><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span> &#123;<span class="attribute">text-indent</span>:<span class="number">50px</span>;&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="所有属性"><a href="#所有属性" class="headerlink" title="所有属性:"></a>所有属性:</h5><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">color</span>	设置文本颜色</span><br><span class="line"><span class="selector-tag">direction</span>	设置文本方向。</span><br><span class="line"><span class="selector-tag">letter-spacing</span>	设置字符间距</span><br><span class="line"><span class="selector-tag">line-height</span>	设置行高</span><br><span class="line"><span class="selector-tag">text-align</span>	对齐元素中的文本</span><br><span class="line"><span class="selector-tag">text-decoration</span>	向文本添加修饰</span><br><span class="line"><span class="selector-tag">text-indent</span>	缩进元素中文本的首行</span><br><span class="line"><span class="selector-tag">text-shadow</span>	设置文本阴影</span><br><span class="line"><span class="selector-tag">text-transform</span>	控制元素中的字母</span><br><span class="line"><span class="selector-tag">unicode-bidi</span>	设置或返回文本是否被重写 </span><br><span class="line"><span class="selector-tag">vertical-align</span>	设置元素的垂直对齐</span><br><span class="line"><span class="selector-tag">white-space</span>	设置元素中空白的处理方式</span><br><span class="line"><span class="selector-tag">word-spacing</span>	设置字间距</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Font"><a href="#Font" class="headerlink" title="Font"></a>Font</h2><ul>
+<li>CSS字体属性定义字体，加粗，大小，文字样式。</li>
+<li></li>
+</ul>
+<h5 id="CSS字型"><a href="#CSS字型" class="headerlink" title="CSS字型"></a>CSS字型</h5><ul>
+<li>通用字体系列 - 拥有相似外观的字体系统组合（如 “Serif” 或 “Monospace”）</li>
+<li>特定字体系列 - 一个特定的字体系列（如 “Times” 或 “Courier”）</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Generic family</th>
+<th>字体系列</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Serif</td>
+<td>Times New Roman Georgia</td>
+<td>Serif字体中字符在行的末端拥有额外的装饰</td>
+</tr>
+<tr>
+<td>Sans-serif</td>
+<td>Arial Verdana</td>
+<td>“Sans”是指无 - 这些字体在末端没有额外的装饰</td>
+</tr>
+<tr>
+<td>Monospace</td>
+<td>Courier New <br> Lucida Console</td>
+<td>所有的等宽字符具有相同的宽度</td>
+</tr>
+</tbody></table>
+<h5 id="字体系列"><a href="#字体系列" class="headerlink" title="字体系列"></a>字体系列</h5><ul>
+<li>font-family 属性设置文本的字体系列。</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span>&#123;<span class="attribute">font-family</span>:<span class="string">"Times New Roman"</span>, Times, serif;&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="字体样式"><a href="#字体样式" class="headerlink" title="字体样式"></a>字体样式</h5><ul>
+<li>正常 - 正常显示文本</li>
+<li>斜体 - 以斜体字显示的文字</li>
+<li>倾斜的文字 - 文字向一边倾斜（和斜体非常类似，但不太支持）<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span><span class="selector-class">.normal</span> &#123;<span class="attribute">font-style</span>:normal;&#125;</span><br><span class="line"><span class="selector-tag">p</span><span class="selector-class">.italic</span> &#123;<span class="attribute">font-style</span>:italic;&#125;</span><br><span class="line"><span class="selector-tag">p</span><span class="selector-class">.oblique</span> &#123;<span class="attribute">font-style</span>:oblique;&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h5 id="字体大小"><a href="#字体大小" class="headerlink" title="字体大小"></a>字体大小</h5><ul>
+<li>font-size 设置文字的大小</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">h1</span> &#123;<span class="attribute">font-size</span>:<span class="number">40px</span>;&#125;</span><br><span class="line"><span class="selector-tag">h2</span> &#123;<span class="attribute">font-size</span>:<span class="number">30px</span>;&#125;</span><br><span class="line"><span class="selector-tag">p</span> &#123;<span class="attribute">font-size</span>:<span class="number">14px</span>;&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><h5 id="链接样式"><a href="#链接样式" class="headerlink" title="链接样式"></a>链接样式</h5><ul>
+<li>链接的样式，可以用任何CSS属性（如颜色，字体，背景等）。</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:link</span> &#123;<span class="attribute">color</span>:<span class="number">#000000</span>;&#125;      <span class="comment">/* 未访问链接*/</span></span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:visited</span> &#123;<span class="attribute">color</span>:<span class="number">#00FF00</span>;&#125;  <span class="comment">/* 已访问链接 */</span></span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123;<span class="attribute">color</span>:<span class="number">#FF00FF</span>;&#125;  <span class="comment">/* 鼠标移动到链接上 */</span></span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:active</span> &#123;<span class="attribute">color</span>:<span class="number">#0000FF</span>;&#125;  <span class="comment">/* 鼠标点击时 */</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="盒子模型"><a href="#盒子模型" class="headerlink" title="盒子模型"></a>盒子模型</h2><pre><code>所有HTML元素可以看作盒子，在CSS中，&quot;box model&quot;这一术语是用来设计和布局时使用。CSS盒模型本质上是一个盒子，封装周围的HTML元素，它包括：边距，边框，填充，和实际内容。盒模型允许我们在其它元素和周围元素边框之间的空间放置元素。</code></pre><p>##### </p>
+<hr>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/09/12/CSS/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-unrealengine_2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/09/04/unrealengine_2/">虚幻引擎学习2</a>
+    </h1>
+  
+
+        
+        <a href="/2019/09/04/unrealengine_2/" class="archive-article-date">
+  	<time datetime="2019-09-03T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="StaticMesh"><a href="#StaticMesh" class="headerlink" title="StaticMesh"></a>StaticMesh</h2><ul>
+<li>headpath<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Engine/StaticMesh.h"</span></span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="camera-control"><a href="#camera-control" class="headerlink" title="camera-control"></a>camera-control</h1><h2 id="APlayerController"><a href="#APlayerController" class="headerlink" title="APlayerController"></a>APlayerController</h2><!-- <figure class="highlight cpp"><figcaption><span>--><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">- GetViewTarget() <span class="comment">// Get the actor the controller is looking at</span></span><br><span class="line">- SetViewTarget() <span class="comment">// 立即切换</span></span><br><span class="line">- SetViewTargetWithBlend() <span class="comment">// 缓慢切换</span></span><br><span class="line">&lt;!-- ``` --&gt;</span><br><span class="line">``` cpp</span><br><span class="line">	<span class="keyword">if</span> ((OurPlayerController-&gt;GetViewTarget() != CameraOne) &amp;&amp; (CameraOne != <span class="literal">nullptr</span>))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">// Cut instantly to camera one.</span></span><br><span class="line">		OurPlayerController-&gt;SetViewTarget(CameraOne);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> ((OurPlayerController-&gt;GetViewTarget() != CameraTwo) &amp;&amp; (CameraTwo != <span class="literal">nullptr</span>))</span><br><span class="line">	&#123;</span><br><span class="line">	    <span class="comment">// Blend smoothly to camera two.</span></span><br><span class="line">	    OurPlayerController-&gt;SetViewTargetWithBlend(CameraTwo, SmoothBlendTime);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table>
+
+<hr>
+<h1 id="ConstructorHelpers"><a href="#ConstructorHelpers" class="headerlink" title="ConstructorHelpers"></a>ConstructorHelpers</h1><h2 id="ConstructorHelpers-FObjectFinder"><a href="#ConstructorHelpers-FObjectFinder" class="headerlink" title="ConstructorHelpers::FObjectFinder"></a>ConstructorHelpers::FObjectFinder</h2><ul>
+<li>headpath<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"UObject/ConstructorHelpers.h"</span></span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">FObjectFinder</span> :</span> <span class="keyword">public</span> FGCObject</span><br><span class="line">&#123;</span><br><span class="line">	T* Object;</span><br><span class="line">	FObjectFinder(<span class="keyword">const</span> TCHAR* ObjectToFind)</span><br><span class="line">	&#123;</span><br><span class="line">	    CheckIfIsInConstructor(ObjectToFind);</span><br><span class="line">		<span class="function">FString <span class="title">PathName</span><span class="params">(ObjectToFind)</span></span>;</span><br><span class="line">		StripObjectClass(PathName,<span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">		Object = ConstructorHelpersInternal::FindOrLoadObject&lt;T&gt;(PathName);</span><br><span class="line">		ValidateObject( Object, PathName, ObjectToFind );</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">Succeeded</span><span class="params">()</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> !!Object;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">AddReferencedObjects</span><span class="params">( FReferenceCollector&amp; Collector )</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Collector.AddReferencedObject(Object);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="UGameplayStatics"><a href="#UGameplayStatics" class="headerlink" title="UGameplayStatics"></a>UGameplayStatics</h2><ul>
+<li>headpath<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Kismet/GameplayStatics.h"</span></span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">UGameplayStatics::GetPlayerController(<span class="keyword">const</span> UObject* WorldContextObject, int32 PlayerIndex )</span><br><span class="line"><span class="comment">//获取本地玩家</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">APlayerController</span>* <span class="title">UGameplayStatics</span>:</span>:GetPlayerController(<span class="keyword">const</span> UObject* WorldContextObject, int32 PlayerIndex ) </span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (UWorld* World = GEngine-&gt;GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))</span><br><span class="line">	&#123;</span><br><span class="line">		uint32 Index = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (FConstPlayerControllerIterator Iterator = World-&gt;GetPlayerControllerIterator(); Iterator; ++Iterator)</span><br><span class="line">		&#123;</span><br><span class="line">			APlayerController* PlayerController = Iterator-&gt;Get();</span><br><span class="line">			<span class="keyword">if</span> (Index == PlayerIndex)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">return</span> PlayerController;</span><br><span class="line">			&#125;</span><br><span class="line">			Index++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="Components-and-Collision"><a href="#Components-and-Collision" class="headerlink" title="Components and Collision"></a>Components and Collision</h1><h2 id="USphereComponent"><a href="#USphereComponent" class="headerlink" title="USphereComponent"></a>USphereComponent</h2><ul>
+<li><p>headpath</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Components/SphereComponent.h"</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>A sphere generally used for simple collision. Bounds are rendered as lines in the editor.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">USphereComponent* SphereComponent = CreateDefaultSubobject&lt;USphereComponent&gt;(TEXT(<span class="string">"RootComponent"</span>));</span><br><span class="line">SphereComponent-&gt;InitSphereRadius(<span class="number">40.0f</span>);<span class="comment">//设置半径</span></span><br><span class="line">SphereComponent-&gt;SetCollisionProfileName(TEXT(<span class="string">"Pawn"</span>));<span class="comment">//</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<hr>
+<h2 id="改变鼠标样式"><a href="#改变鼠标样式" class="headerlink" title="改变鼠标样式"></a>改变鼠标样式</h2><h2 id="AI移动"><a href="#AI移动" class="headerlink" title="AI移动"></a>AI移动</h2><pre><code>加入AI模块：</code></pre><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PublicDependencyModuleNames.AddRange(<span class="keyword">new</span> <span class="keyword">string</span>[] &#123; <span class="string">"Core"</span>, <span class="string">"CoreUObject"</span>, <span class="string">"Engine"</span>, <span class="string">"InputCore"</span> ,<span class="string">"AIModule"</span>&#125;);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="DecalComponent-贴花组件"><a href="#DecalComponent-贴花组件" class="headerlink" title="DecalComponent 贴花组件"></a>DecalComponent 贴花组件</h2>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/09/04/unrealengine_2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-unrealengine_1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -155,7 +474,8 @@
         <h2 id="常用术语"><a href="#常用术语" class="headerlink" title="常用术语"></a>常用术语</h2><blockquote>
 <p><strong>Project</strong>：保存所有组成单独游戏的所有内容和代码。<br><br><strong>Object</strong>：虚幻引擎中，最基础的构建单元。<br><br><strong>Class</strong>：用于定义在创建虚幻引擎游戏中使用的特定Actor或对象的行为和属性。<br><br><strong>Actors</strong>：Actor是支持三维转换（如平移、旋转和缩放）的泛型类 (类似Unity GameObject?)<br><br><strong>Component</strong>：组件，可为Actor添加新的功能。<br><br><strong>Pawn</strong>：Actor的子类，充当游戏中的角色。<br><br><strong>Character</strong>：角色（Character） 是Pawn Actor的子类，旨在用作玩家角色。<br><strong>PlayerController</strong>：玩家控制器，获取玩家输入并将其转换为交互。<br><br><strong>AIController</strong>：AI控制器，用以控制游戏中的非玩家角色。<br><br><strong>Brush</strong>：用以描述关卡中的三维体积信息。（根据附加在它们上的效果，体积具有多种用途，例如：阻塞体积（Blocking Volume）（它们是不可见的，用于阻止Actor穿过它们）、伤害产生体积（Pain Causing Volume）（随着时间的推移，会对与其重叠的Actor造成伤害）或触发器体积（Trigger Volume）（用作在Actor进入或退出它们时引发事件的一种方式）。）<br><br><strong>Level</strong>：是用户定义的游戏区域。 我们主要通过放置、变换及编辑Actor的属性来创建、查看及修改关卡。 在虚幻编辑器中，每个关卡都被保存为单独的.umap文件，所以它们有时也被称为“地图”。<br><br><strong>World</strong>：世界场景（World） 中包含载入的关卡列表。它可处理关卡流送和动态Actor的生成（创建）。<br><strong>GameState</strong>：包含要复制到游戏中的每个客户端信息，表示每个联网玩家的“游戏状态”。<br></p>
 </blockquote>
-
+<hr>
+<h2 id="工具和编辑器"><a href="#工具和编辑器" class="headerlink" title="工具和编辑器"></a>工具和编辑器</h2><h4 id="关卡编辑器"><a href="#关卡编辑器" class="headerlink" title="关卡编辑器"></a>关卡编辑器</h4>
       
 
       

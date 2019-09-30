@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href>
-  <title>Archives: 2019 | This is Chenzengxin&#39;s personal page</title>
+  <title>虚幻引擎学习2 | This is Chenzengxin&#39;s personal page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="This is Chenzengxin&#39;s personal page">
-<meta property="og:url" content="/archives/2019/index.html">
+  <meta name="description" content="StaticMesh headpath1#include &quot;Engine/StaticMesh.h&quot;    camera-controlAPlayerController123456789101112131415- GetViewTarget() // Get the actor the controller is looking at- SetViewTarget() // 立即切换- SetV">
+<meta property="og:type" content="article">
+<meta property="og:title" content="虚幻引擎学习2">
+<meta property="og:url" content="/2019/09/04/unrealengine_2/index.html">
 <meta property="og:site_name" content="This is Chenzengxin&#39;s personal page">
+<meta property="og:description" content="StaticMesh headpath1#include &quot;Engine/StaticMesh.h&quot;    camera-controlAPlayerController123456789101112131415- GetViewTarget() // Get the actor the controller is looking at- SetViewTarget() // 立即切换- SetV">
 <meta property="og:locale" content="cn">
+<meta property="og:updated_time" content="2019-09-26T02:20:01.634Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="This is Chenzengxin&#39;s personal page">
+<meta name="twitter:title" content="虚幻引擎学习2">
+<meta name="twitter:description" content="StaticMesh headpath1#include &quot;Engine/StaticMesh.h&quot;    camera-controlAPlayerController123456789101112131415- GetViewTarget() // Get the actor the controller is looking at- SetViewTarget() // 立即切换- SetV">
   
     <link rel="alternative" href="/atom.xml" title="This is Chenzengxin&#39;s personal page" type="application/atom+xml">
   
@@ -130,238 +134,202 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-unrealengine_2" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/30/WebGL/" class="archive-article-date">
-  	<time datetime="2019-09-29T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-30</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/30/WebGL/">WebGL</a>
+    <h1 class="article-title" itemprop="name">
+      虚幻引擎学习2
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/12/CSS/" class="archive-article-date">
-  	<time datetime="2019-09-11T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-12</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/12/CSS/">C# Reflection</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/04/unrealengine_2/" class="archive-article-date">
+        
+        <a href="/2019/09/04/unrealengine_2/" class="archive-article-date">
   	<time datetime="2019-09-03T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-04</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/04/unrealengine_2/">虚幻引擎学习2</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="StaticMesh"><a href="#StaticMesh" class="headerlink" title="StaticMesh"></a>StaticMesh</h2><ul>
+<li>headpath<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Engine/StaticMesh.h"</span></span></span><br></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
-          
+</li>
+</ul>
+<h1 id="camera-control"><a href="#camera-control" class="headerlink" title="camera-control"></a>camera-control</h1><h2 id="APlayerController"><a href="#APlayerController" class="headerlink" title="APlayerController"></a>APlayerController</h2><!-- <figure class="highlight cpp"><figcaption><span>--><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">- GetViewTarget() <span class="comment">// Get the actor the controller is looking at</span></span><br><span class="line">- SetViewTarget() <span class="comment">// 立即切换</span></span><br><span class="line">- SetViewTargetWithBlend() <span class="comment">// 缓慢切换</span></span><br><span class="line">&lt;!-- ``` --&gt;</span><br><span class="line">``` cpp</span><br><span class="line">	<span class="keyword">if</span> ((OurPlayerController-&gt;GetViewTarget() != CameraOne) &amp;&amp; (CameraOne != <span class="literal">nullptr</span>))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">// Cut instantly to camera one.</span></span><br><span class="line">		OurPlayerController-&gt;SetViewTarget(CameraOne);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> ((OurPlayerController-&gt;GetViewTarget() != CameraTwo) &amp;&amp; (CameraTwo != <span class="literal">nullptr</span>))</span><br><span class="line">	&#123;</span><br><span class="line">	    <span class="comment">// Blend smoothly to camera two.</span></span><br><span class="line">	    OurPlayerController-&gt;SetViewTargetWithBlend(CameraTwo, SmoothBlendTime);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table>
 
+<hr>
+<h1 id="ConstructorHelpers"><a href="#ConstructorHelpers" class="headerlink" title="ConstructorHelpers"></a>ConstructorHelpers</h1><h2 id="ConstructorHelpers-FObjectFinder"><a href="#ConstructorHelpers-FObjectFinder" class="headerlink" title="ConstructorHelpers::FObjectFinder"></a>ConstructorHelpers::FObjectFinder</h2><ul>
+<li>headpath<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"UObject/ConstructorHelpers.h"</span></span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">FObjectFinder</span> :</span> <span class="keyword">public</span> FGCObject</span><br><span class="line">&#123;</span><br><span class="line">	T* Object;</span><br><span class="line">	FObjectFinder(<span class="keyword">const</span> TCHAR* ObjectToFind)</span><br><span class="line">	&#123;</span><br><span class="line">	    CheckIfIsInConstructor(ObjectToFind);</span><br><span class="line">		<span class="function">FString <span class="title">PathName</span><span class="params">(ObjectToFind)</span></span>;</span><br><span class="line">		StripObjectClass(PathName,<span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">		Object = ConstructorHelpersInternal::FindOrLoadObject&lt;T&gt;(PathName);</span><br><span class="line">		ValidateObject( Object, PathName, ObjectToFind );</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">Succeeded</span><span class="params">()</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> !!Object;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">AddReferencedObjects</span><span class="params">( FReferenceCollector&amp; Collector )</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Collector.AddReferencedObject(Object);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="UGameplayStatics"><a href="#UGameplayStatics" class="headerlink" title="UGameplayStatics"></a>UGameplayStatics</h2><ul>
+<li>headpath<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Kismet/GameplayStatics.h"</span></span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">UGameplayStatics::GetPlayerController(<span class="keyword">const</span> UObject* WorldContextObject, int32 PlayerIndex )</span><br><span class="line"><span class="comment">//获取本地玩家</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">APlayerController</span>* <span class="title">UGameplayStatics</span>:</span>:GetPlayerController(<span class="keyword">const</span> UObject* WorldContextObject, int32 PlayerIndex ) </span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (UWorld* World = GEngine-&gt;GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))</span><br><span class="line">	&#123;</span><br><span class="line">		uint32 Index = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (FConstPlayerControllerIterator Iterator = World-&gt;GetPlayerControllerIterator(); Iterator; ++Iterator)</span><br><span class="line">		&#123;</span><br><span class="line">			APlayerController* PlayerController = Iterator-&gt;Get();</span><br><span class="line">			<span class="keyword">if</span> (Index == PlayerIndex)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">return</span> PlayerController;</span><br><span class="line">			&#125;</span><br><span class="line">			Index++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="Components-and-Collision"><a href="#Components-and-Collision" class="headerlink" title="Components and Collision"></a>Components and Collision</h1><h2 id="USphereComponent"><a href="#USphereComponent" class="headerlink" title="USphereComponent"></a>USphereComponent</h2><ul>
+<li><p>headpath</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Components/SphereComponent.h"</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>A sphere generally used for simple collision. Bounds are rendered as lines in the editor.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">USphereComponent* SphereComponent = CreateDefaultSubobject&lt;USphereComponent&gt;(TEXT(<span class="string">"RootComponent"</span>));</span><br><span class="line">SphereComponent-&gt;InitSphereRadius(<span class="number">40.0f</span>);<span class="comment">//设置半径</span></span><br><span class="line">SphereComponent-&gt;SetCollisionProfileName(TEXT(<span class="string">"Pawn"</span>));<span class="comment">//</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<hr>
+<h2 id="改变鼠标样式"><a href="#改变鼠标样式" class="headerlink" title="改变鼠标样式"></a>改变鼠标样式</h2><h2 id="AI移动"><a href="#AI移动" class="headerlink" title="AI移动"></a>AI移动</h2><pre><code>加入AI模块：</code></pre><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PublicDependencyModuleNames.AddRange(<span class="keyword">new</span> <span class="keyword">string</span>[] &#123; <span class="string">"Core"</span>, <span class="string">"CoreUObject"</span>, <span class="string">"Engine"</span>, <span class="string">"InputCore"</span> ,<span class="string">"AIModule"</span>&#125;);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="DecalComponent-贴花组件"><a href="#DecalComponent-贴花组件" class="headerlink" title="DecalComponent 贴花组件"></a>DecalComponent 贴花组件</h2>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http:/2019/09/04/unrealengine_2/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/29/unrealengine_1/" class="archive-article-date">
-  	<time datetime="2019-08-28T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-29</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2019/09/12/CSS/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          C# Reflection
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/08/29/unrealengine_1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">虚幻引擎学习1</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/29/unrealengine_1/">虚幻引擎学习1</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/28/HeronFormula/" class="archive-article-date">
-  	<time datetime="2019-08-27T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-28</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/28/HeronFormula/">海伦公式</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/27/C# Reflection/" class="archive-article-date">
-  	<time datetime="2019-08-26T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/27/C# Reflection/">C# Reflection</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/21/hello-world/" class="archive-article-date">
-  	<time datetime="2019-08-21T02:52:13.482Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-21</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/21/hello-world/">Hello World</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/21/第一篇博文/" class="archive-article-date">
-  	<time datetime="2019-08-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-21</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/21/第一篇博文/">第一篇博文</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -384,8 +352,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
