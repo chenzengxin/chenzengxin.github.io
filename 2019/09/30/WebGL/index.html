@@ -16,7 +16,7 @@
 <meta property="og:description" content="1、WebGL基本原理WebGL 本质上是基于光栅化的 API，WebGL 只关注投影矩阵的坐标和投影矩阵的颜色，可以使用“着色器”来完成上述任务。顶点着色器可以提供投影矩阵的坐标，片段着色器可以提供投影矩阵的颜色。投影矩阵的坐标的范围始终是从 -1 到 1。WebGL基于图元（三角形、点、线）进行图像绘制123// Get A WebGL contextvar canvas = document">
 <meta property="og:locale" content="cn">
 <meta property="og:image" content="/img/webgl.png">
-<meta property="og:updated_time" content="2019-09-30T10:42:52.766Z">
+<meta property="og:updated_time" content="2019-09-30T10:44:36.140Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WebGL">
 <meta name="twitter:description" content="1、WebGL基本原理WebGL 本质上是基于光栅化的 API，WebGL 只关注投影矩阵的坐标和投影矩阵的颜色，可以使用“着色器”来完成上述任务。顶点着色器可以提供投影矩阵的坐标，片段着色器可以提供投影矩阵的颜色。投影矩阵的坐标的范围始终是从 -1 到 1。WebGL基于图元（三角形、点、线）进行图像绘制123// Get A WebGL contextvar canvas = document">
@@ -168,7 +168,7 @@
 
 <h3 id="绘制图元"><a href="#绘制图元" class="headerlink" title="绘制图元"></a>绘制图元</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">draw</span>(<span class="params">gl, obj</span>) </span>&#123; </span><br><span class="line">    <span class="comment">// 清空背景（使用黑色填充）</span></span><br><span class="line">    gl.clearColor(<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>); </span><br><span class="line">    gl.clear(gl.COLOR_BUFFER_BIT); </span><br><span class="line">    <span class="comment">// 设置待绘制的顶点缓冲</span></span><br><span class="line">    gl.bindBuffer(gl.ARRAY_BUFFER, obj.buffer); </span><br><span class="line">    <span class="comment">// 设置待用的着色器</span></span><br><span class="line">    gl.useProgram(shaderProgram);</span><br><span class="line">    <span class="comment">// 建立着色器参数之间的关联：顶点和投影/模型矩阵</span></span><br><span class="line">    gl.vertexAttribPointer(shaderVertexPositionAttribute, </span><br><span class="line">    obj.vertSize, gl.FLOAT, <span class="literal">false</span>, <span class="number">0</span>, <span class="number">0</span>); </span><br><span class="line">    gl.uniformMatrix4fv(shaderProjectionMatrixUniform, <span class="literal">false</span>, </span><br><span class="line">    projectionMatrix); </span><br><span class="line">    gl.uniformMatrix4fv(shaderModelViewMatrixUniform, <span class="literal">false</span>, </span><br><span class="line">    modelViewMatrix);</span><br><span class="line">    <span class="comment">// 绘制物体</span></span><br><span class="line">    gl.drawArrays(obj.primtype, <span class="number">0</span>, obj.nVerts); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p> <img src="/img/webgl.png" alt title="title"></p>
+<h3 id="展示效果"><a href="#展示效果" class="headerlink" title="展示效果"></a>展示效果</h3><p> <img src="/img/webgl.png" alt title="title"></p>
 
       
 
